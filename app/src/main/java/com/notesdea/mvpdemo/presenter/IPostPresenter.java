@@ -1,4 +1,4 @@
-package com.notesdea.mvpdemo.view;
+package com.notesdea.mvpdemo.presenter;
 
 /**
  * Created by notesdea on 1/14/17.
