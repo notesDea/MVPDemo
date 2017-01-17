@@ -1,8 +1,12 @@
 package com.notesdea.mvpdemo.presenter;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.notesdea.mvpdemo.data.HttpCallback;
 import com.notesdea.mvpdemo.data.Mock;
+import com.notesdea.mvpdemo.data.NotesdeaClient;
 import com.notesdea.mvpdemo.model.Post;
 import com.notesdea.mvpdemo.view.IPostView;
 
@@ -14,7 +18,6 @@ public class PostPresenter implements IPostPresenter {
 
     private IPostView mPostView;
     private Post mPost;
-    private Mock mMock;
 
     public PostPresenter(IPostView view) {
         mPostView = view;
@@ -22,13 +25,19 @@ public class PostPresenter implements IPostPresenter {
 
     public void start(int id) {
         mPostView.showLoading();
-        //todo 需要修改成网络请求
-        mMock = new Mock();
-        mPost = new Post();
-        mPost.setTitle(mMock.getTitle());
-        mPost.setContent(mMock.getContent());
-        mPostView.hideLoading();
-        showPost();
+        NotesdeaClient.get("/api/get_posts/?page=" + id, new HttpCallback() {
+            @Override
+            public void mock(Mock mock) {
+                if (mock != null) {
+                    mPost = new Post();
+                    mPost.setTitle(mock.getTitle());
+                    mPost.setContent(mock.getContent());
+
+                    showPost();
+                    mPostView.hideLoading();
+                }
+            }
+        });
     }
 
     @Override

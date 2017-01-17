@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -94,13 +95,12 @@ public class JsonParams {
         return params.toString();
     }
 
-    //URL转换成Query string 的形式
+    //URL 转换成Query string 的形式
     public String toQueryString(String url) {
         String paramString = getEncodedParamString();
-        if (TextUtils.isEmpty(paramString)) {
-            return url;
-        }
+        if (TextUtils.isEmpty(paramString)) return url;
 
+        //拼接成 http://www.notesdea.com/?key1=value1&key2=value2 的形式
         if (url.indexOf("?") == -1) {
             url += "?" + paramString;
         } else {
@@ -111,7 +111,18 @@ public class JsonParams {
 
     private String getEncodedParamString() {
         StringBuilder result = new StringBuilder();
+        //获取key的
         Iterator it = params.keys();
-        //todo 继续写下去
+        //类似于解码成 "key1=value1&key2=value2" 的形式
+        while (it.hasNext()) {
+            if (result.length() > 0) result.append("&");
+
+            String key = (String) it.next();
+            String value = params.optString(key);
+            result.append(URLEncoder.encode(key));
+            result.append("=");
+            result.append(URLEncoder.encode(value));
+        }
+        return result.toString();
     }
 }
