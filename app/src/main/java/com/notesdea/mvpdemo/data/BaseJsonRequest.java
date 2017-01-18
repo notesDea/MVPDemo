@@ -21,9 +21,7 @@ public class BaseJsonRequest extends JsonRequest<String> {
 
     public BaseJsonRequest(int method, String url, JsonParams params,
                            Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        super(method, url,
-                null == params ? null : params.toString(),
-                listener, errorListener);
+        super(method, url, null == params ? null : params.toString(), listener, errorListener);
         this.mUrl = url;
     }
 
@@ -34,7 +32,6 @@ public class BaseJsonRequest extends JsonRequest<String> {
         headers.put("App-Device", "Android");
         headers.put("Version-Code", Config.getVersionCode());
         return headers;
-
     }
 
     @Override

@@ -23,6 +23,5 @@ public class PostActivity extends AppCompatActivity {
         PostFragment fragment = PostFragment.newInstance(postId);
         transaction.add(R.id.layout_main_fragment_container, fragment).
                 commit();
-
     }
 }

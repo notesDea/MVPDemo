@@ -1,8 +1,10 @@
 package com.notesdea.mvpdemo.data;
 
-import com.android.volley.BuildConfig;
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.notesdea.mvpdemo.BuildConfig;
 
 /**
  * Created by notesdea on 1/15/17.
@@ -10,13 +12,15 @@ import com.android.volley.VolleyError;
 
 public class HttpCallback implements Response.Listener<String>, Response.ErrorListener{
 
+    private static final String TAG = HttpCallback.class.getSimpleName();
+
     private String mCache;
-    private Mock mMock;
+    private String mMock;
 
     @Override
     public void onResponse(String response) {
         ok(response);
-        if (BuildConfig.DEBUG && mMock != null) {
+        if (BuildConfig.DEBUG && mMock != null ) {
             mock(mMock);
         }
     }
@@ -29,7 +33,7 @@ public class HttpCallback implements Response.Listener<String>, Response.ErrorLi
         }
         fail(errorMessage);
 
-        if (BuildConfig.DEBUG && mMock != null) {
+        if (BuildConfig.DEBUG && mMock != null ) {
             mock(mMock);
         }
     }
@@ -40,11 +44,12 @@ public class HttpCallback implements Response.Listener<String>, Response.ErrorLi
     public void fail(String errorMessage) {
     }
 
-    public void mock(Mock mock) {
+    public void mock(String mock) {
     }
 
-    public void setMock(Mock mock) {
+    public void setMock(String mock) {
         this.mMock = mock;
+        Log.d(TAG, "setMock: " + mMock);
     }
 
     public void setCache(String cache) {

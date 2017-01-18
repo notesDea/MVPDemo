@@ -1,7 +1,6 @@
 package com.notesdea.mvpdemo.presenter;
 
-import android.os.Handler;
-import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.notesdea.mvpdemo.data.HttpCallback;
@@ -16,6 +15,8 @@ import com.notesdea.mvpdemo.view.IPostView;
 
 public class PostPresenter implements IPostPresenter {
 
+    private static final String TAG = PostPresenter.class.getSimpleName();
+
     private IPostView mPostView;
     private Post mPost;
 
@@ -25,19 +26,25 @@ public class PostPresenter implements IPostPresenter {
 
     public void start(int id) {
         mPostView.showLoading();
-        NotesdeaClient.get("/api/get_posts/?page=" + id, new HttpCallback() {
+        HttpCallback callback = new HttpCallback() {
             @Override
-            public void mock(Mock mock) {
-                if (mock != null) {
-                    mPost = new Post();
-                    mPost.setTitle(mock.getTitle());
-                    mPost.setContent(mock.getContent());
+            public void ok(String response) {
+                super.ok(response);
+                Log.d(TAG, "ok: " + response);
+            }
 
+            @Override
+            public void mock(String mock) {
+                Log.d(TAG, "mock called");
+                if (mock != null) {
+                    mPost = new Gson().fromJson(mock, Post.class);//todo 写好这个，再检查Post类是否正确
                     showPost();
                     mPostView.hideLoading();
                 }
             }
-        });
+        };
+        callback.setMock(new Mock().toString());
+        NotesdeaClient.get("/api/get_posts/?page=1", callback);
     }
 
     @Override

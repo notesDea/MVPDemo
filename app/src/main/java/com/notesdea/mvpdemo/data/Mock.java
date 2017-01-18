@@ -1,23 +1,12 @@
 package com.notesdea.mvpdemo.data;
 
 /**
- * Created by notesdea on 1/14/17.
+ * Created by notes on 2017/1/18.
  */
 
-//假数据
 public class Mock {
-
-    public Mock() {
-
-    }
-
-    public String getTitle() {
-        return "id = 1, Android";
-    }
-
-    public String getContent() {
-        return "qwertyuiopasdfghjklzxcvbnm,qwertyuiopasdfghjklzxcvbnm,qwertyuiopasdfghjklzxcvbnm,\n" +
-                "qwertyuiopasdfghjklzxcvbnm,qwertyuiopasdfghjklzxcvbnm,qwertyuiopasdfghjklzxcvbnm,\n" +
-                "qwertyuiopasdfghjklzxcvbnm,qwertyuiopasdfghjklzxcvbnm,qwertyuiopasdfghjklzxcvbnm\n";
+    @Override
+    public String toString() {
+        return "{\"id\":1,\"title\":\"\\u7b80\\u77ed\\u7b11\\u8bdd5\\u7b11\",\"content\":\"\\u5e7d\\u9ed8\\u662f\\u51b7\\u6ef4,\\u4e5f\\u80fd\\u9017\\u7b11\\u4f60\"}";
     }
 }
